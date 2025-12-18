@@ -4,7 +4,7 @@ In this exercise, you'll learn how to supply tokens into Aave V3.
 
 The starter code for this exercise is provided in `foundry/src/exercises/Supply.sol`
 
-Solution is provided in `foundry/src/solutions/Supply.sol`
+Solution is provided in `foundry/src/solutions/Supply.sol` 
 
 ## Task 1 - Supply token to Aave V3 pool
 

@@ -11,15 +11,19 @@ contract Supply {
 
     // Task 1 - Supply token to Aave V3 pool
     function supply(address token, uint256 amount) public {
-        // Task 1.1 - Transfer token from msg.sender
-        // Task 1.2 - Approve the pool contract to spend token
-        // Task 1.3 - Supply token to the pool
+        IERC20(token).transferFrom(msg.sender, address(this), amount);
+        IERC20(token).approve(address(pool), amount);
+        pool.supply({
+            asset: token,
+            amount: amount,
+            onBehalfOf: address(this),
+            referralCode: 0
+        });
     }
 
     // Task 2 - Get supply balance
     function getSupplyBalance(address token) public view returns (uint256) {
-        // Balance of the token that can be withdrawn is the balance of aToken
-        // Task 2.1 - Get the aToken address
-        // Task 2.2 - Get the balance of aToken for this contract
+        IPool.ReserveData memory reserve = pool.getReserveData(token);
+        return IERC20(reserve.aTokenAddress).balanceOf(address(this));
     }
 }
