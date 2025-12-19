@@ -35,7 +35,8 @@ contract Repay {
 
     function getVariableDebt(address token) public view returns (uint256) {
         IPool.ReserveData memory reserve = pool.getReserveData(token);
-        return IERC20(reserve.variableDebtTokenAddress).balanceOf(address(this));
+        return
+            IERC20(reserve.variableDebtTokenAddress).balanceOf(address(this));
     }
 
     function repay(address token) public returns (uint256) {

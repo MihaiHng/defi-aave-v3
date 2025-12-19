@@ -6,7 +6,7 @@ The starter code for this exercise is provided in `foundry/src/exercises/Repay.s
 
 Solution is provided in `foundry/src/solutions/Repay.sol`
 
-## Task 1 - Repay all the debt owed to Aave V3
+## Task 1 - Repay all the debt owed to Aave V3 
 
 ```solidity
 function repay(address token) public returns (uint256) {

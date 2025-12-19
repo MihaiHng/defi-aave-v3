@@ -26,14 +26,15 @@ contract RepayTest is Test {
         IPool.ReserveData memory reserve = pool.getReserveData(DAI);
         debtToken = IERC20(reserve.variableDebtTokenAddress);
 
-        (,, uint256 availableToBorrowUsd,,,) =
-            pool.getUserAccountData(address(target));
+        (, , uint256 availableToBorrowUsd, , , ) = pool.getUserAccountData(
+            address(target)
+        );
 
         // Approximate max borrow = available USD * DAI decimals / 1e8
         // 1 USD = 1e8
         uint256 approxMaxBorrow = availableToBorrowUsd * (10 ** 10);
         // 50% of approx max borrow
-        uint256 borrowAmount = approxMaxBorrow * 50 / 100;
+        uint256 borrowAmount = (approxMaxBorrow * 50) / 100;
         console.log("Approximate max borrow: %e", approxMaxBorrow);
         console.log("Borrow amount: %e", borrowAmount);
         target.borrow(DAI, borrowAmount);
