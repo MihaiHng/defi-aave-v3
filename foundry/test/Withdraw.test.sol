@@ -30,7 +30,8 @@ contract WithdrawTest is Test {
 
     function test_withdraw() public {
         uint256 aWethBalBefore = aWeth.balanceOf(address(target));
-        uint256 withdrawn = target.withdraw(WETH);
+        uint256 amount = aWethBalBefore;
+        uint256 withdrawn = target.withdraw(WETH, amount);
         uint256 aWethBalAfter = aWeth.balanceOf(address(target));
 
         console.log("WETH balance: %e", aWethBalBefore);
@@ -39,7 +40,9 @@ contract WithdrawTest is Test {
         assertEq(aWethBalAfter, 0, "aWETH balance after");
         assertEq(withdrawn, aWethBalBefore, "aWETH balance");
         assertEq(
-            weth.balanceOf(address(target)), withdrawn, "WETH balance of target"
+            weth.balanceOf(address(target)),
+            withdrawn,
+            "WETH balance of target"
         );
     }
 }

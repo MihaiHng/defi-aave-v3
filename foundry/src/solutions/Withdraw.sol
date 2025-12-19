@@ -26,8 +26,11 @@ contract Withdraw {
     }
 
     function withdraw(address token, uint256 amount) public returns (uint256) {
-        uint256 withdrawn =
-            pool.withdraw({asset: token, amount: amount, to: address(this)});
+        uint256 withdrawn = pool.withdraw({
+            asset: token,
+            amount: amount,
+            to: address(this)
+        });
         return withdrawn;
     }
 }

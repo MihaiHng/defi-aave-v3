@@ -2,7 +2,7 @@
 
 In this exercise, you'll learn how to withdraw tokens that was supplied either as liquidity or collateral from Aave V3.
 
-The starter code for this exercise is provided in `foundry/src/exercises/Withdraw.sol`
+The starter code for this exercise is provided in `foundry/src/exercises/Withdraw.sol` 
 
 Solution is provided in `foundry/src/solutions/Withdraw.sol`
 
