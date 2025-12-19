@@ -27,14 +27,17 @@ contract Borrow {
         uint256 price = oracle.getAssetPrice(token);
         uint256 decimals = IERC20Metadata(token).decimals();
 
-        (,, uint256 availableToBorrowUsd,,,) =
-            pool.getUserAccountData(address(this));
+        (, , uint256 availableToBorrowUsd, , , ) = pool.getUserAccountData(
+            address(this)
+        );
 
-        return availableToBorrowUsd * (10 ** decimals) / price;
+        return (availableToBorrowUsd * (10 ** decimals)) / price;
     }
 
     function getHealthFactor() public view returns (uint256) {
-        (,,,,, uint256 healthFactor) = pool.getUserAccountData(address(this));
+        (, , , , , uint256 healthFactor) = pool.getUserAccountData(
+            address(this)
+        );
         return healthFactor;
     }
 
@@ -52,6 +55,7 @@ contract Borrow {
 
     function getVariableDebt(address token) public view returns (uint256) {
         IPool.ReserveData memory reserve = pool.getReserveData(token);
-        return IERC20(reserve.variableDebtTokenAddress).balanceOf(address(this));
+        return
+            IERC20(reserve.variableDebtTokenAddress).balanceOf(address(this));
     }
 }

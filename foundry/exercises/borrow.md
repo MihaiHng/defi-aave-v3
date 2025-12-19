@@ -9,7 +9,7 @@ Solution is provided in `foundry/src/solutions/Borrow.sol`
 ## Task 1 - Approximate the maximum amount of token that can be borrowed
 
 ```solidity
-function approxMaxBorrow(address token) public view returns (uint256) {
+function approxMaxBorrow(address token) public view returns (uint256) { 
     // Task 1.1 - Get asset price from the oracle.
     // The price is returned with 8 decimals (1e8 = 1 USD)
 
