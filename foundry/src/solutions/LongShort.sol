@@ -23,19 +23,23 @@ contract LongShort is Aave, Swap {
 
     // Approve this contract to pull in collateral
     // Approve this contract to borrow
-    function open(OpenParams memory params)
-        public
-        returns (uint256 collateralAmountOut)
-    {
+    function open(
+        OpenParams memory params
+    ) public returns (uint256 collateralAmountOut) {
         require(params.minHealthFactor > 1e18, "min health factor <= 1");
 
         // Transfer collateral
-        IERC20(params.collateralToken)
-            .transferFrom(msg.sender, address(this), params.collateralAmount);
+        IERC20(params.collateralToken).transferFrom(
+            msg.sender,
+            address(this),
+            params.collateralAmount
+        );
 
         // Supply collateral
-        IERC20(params.collateralToken)
-            .approve(address(pool), params.collateralAmount);
+        IERC20(params.collateralToken).approve(
+            address(pool),
+            params.collateralAmount
+        );
         supply(params.collateralToken, params.collateralAmount, msg.sender);
 
         // Borrow token
@@ -48,15 +52,19 @@ contract LongShort is Aave, Swap {
         );
 
         // Swap borrowed token to collateral token
-        IERC20(params.borrowToken).approve(address(router), params.borrowAmount);
-        return swap({
-            tokenIn: params.borrowToken,
-            tokenOut: params.collateralToken,
-            amountIn: params.borrowAmount,
-            amountOutMin: params.minSwapAmountOut,
-            receiver: msg.sender,
-            data: params.swapData
-        });
+        IERC20(params.borrowToken).approve(
+            address(router),
+            params.borrowAmount
+        );
+        return
+            swap({
+                tokenIn: params.borrowToken,
+                tokenOut: params.collateralToken,
+                amountIn: params.borrowAmount,
+                amountOutMin: params.minSwapAmountOut,
+                receiver: msg.sender,
+                data: params.swapData
+            });
     }
 
     struct CloseParams {
@@ -72,7 +80,9 @@ contract LongShort is Aave, Swap {
     // Approve this contract to pull in collateral AToken
     // Approve this contract to pull in collateral
     // Approve this contract to pull in borrowed token if closing at a loss
-    function close(CloseParams memory params)
+    function close(
+        CloseParams memory params
+    )
         public
         returns (
             uint256 collateralWithdrawn,
@@ -81,12 +91,17 @@ contract LongShort is Aave, Swap {
         )
     {
         // Transfer collateral
-        IERC20(params.collateralToken)
-            .transferFrom(msg.sender, address(this), params.collateralAmount);
+        IERC20(params.collateralToken).transferFrom(
+            msg.sender,
+            address(this),
+            params.collateralAmount
+        );
 
         // Swap collateral to borrowed token
-        IERC20(params.collateralToken)
-            .approve(address(router), params.collateralAmount);
+        IERC20(params.collateralToken).approve(
+            address(router),
+            params.collateralAmount
+        );
         uint256 amountOut = swap({
             tokenIn: params.collateralToken,
             tokenOut: params.borrowToken,
@@ -106,8 +121,11 @@ contract LongShort is Aave, Swap {
         if (debtToRepay > amountOut) {
             // msg.sender repays for the difference
             repayAmount = debtToRepay - amountOut;
-            IERC20(params.borrowToken)
-                .transferFrom(msg.sender, address(this), repayAmount);
+            IERC20(params.borrowToken).transferFrom(
+                msg.sender,
+                address(this),
+                repayAmount
+            );
         }
         repay(params.borrowToken, debtToRepay, msg.sender);
 
@@ -117,12 +135,15 @@ contract LongShort is Aave, Swap {
             msg.sender,
             address(this),
             Math.min(
-                aToken.balanceOf(msg.sender), params.maxCollateralToWithdraw
+                aToken.balanceOf(msg.sender),
+                params.maxCollateralToWithdraw
             )
         );
 
         uint256 withdrawn = withdraw(
-            params.collateralToken, params.maxCollateralToWithdraw, msg.sender
+            params.collateralToken,
+            params.maxCollateralToWithdraw,
+            msg.sender
         );
 
         // Transfer profit = swapped - repaid

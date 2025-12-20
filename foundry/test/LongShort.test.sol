@@ -3,17 +3,9 @@ pragma solidity 0.8.28;
 
 import {Test, console} from "forge-std/Test.sol";
 import {IERC20} from "../src/interfaces/IERC20.sol";
-import {
-    POOL,
-    ORACLE,
-    WETH,
-    DAI,
-    UNISWAP_V3_POOL_FEE_DAI_WETH
-} from "../src/Constants.sol";
+import {POOL, ORACLE, WETH, DAI, UNISWAP_V3_POOL_FEE_DAI_WETH} from "../src/Constants.sol";
 import {IPool} from "../src/interfaces/aave-v3/IPool.sol";
-import {
-    IVariableDebtToken
-} from "../src/interfaces/aave-v3/IVariableDebtToken.sol";
+import {IVariableDebtToken} from "../src/interfaces/aave-v3/IVariableDebtToken.sol";
 import {IAaveOracle} from "../src/interfaces/aave-v3/IAaveOracle.sol";
 import {LongShort} from "@exercises/LongShort.sol";
 
@@ -33,8 +25,9 @@ contract LongShortTest is Test {
 
         // Test open
         console.log("--- open ---");
-        IVariableDebtToken debtToken =
-            IVariableDebtToken(debtReserve.variableDebtTokenAddress);
+        IVariableDebtToken debtToken = IVariableDebtToken(
+            debtReserve.variableDebtTokenAddress
+        );
         debtToken.approveDelegation(address(target), type(uint256).max);
 
         uint256 collateralAmount = 1e18;
@@ -78,30 +71,37 @@ contract LongShortTest is Test {
         uint256 wethBal = weth.balanceOf(address(this));
         weth.approve(address(target), wethBal);
 
-        uint256[2] memory balsBefore =
-            [weth.balanceOf(address(this)), dai.balanceOf(address(this))];
+        uint256[2] memory balsBefore = [
+            weth.balanceOf(address(this)),
+            dai.balanceOf(address(this))
+        ];
 
         (
             uint256 collateralWithdrawn,
             uint256 debtRepaidFromMsgSender,
             uint256 borrowedLeftover
         ) = target.close(
-            LongShort.CloseParams({
-                collateralToken: WETH,
-                collateralAmount: wethBal,
-                maxCollateralToWithdraw: type(uint256).max,
-                borrowToken: DAI,
-                maxDebtToRepay: type(uint256).max,
-                minSwapAmountOut: 1,
-                swapData: swapData
-            })
-        );
+                LongShort.CloseParams({
+                    collateralToken: WETH,
+                    collateralAmount: wethBal,
+                    maxCollateralToWithdraw: type(uint256).max,
+                    borrowToken: DAI,
+                    maxDebtToRepay: type(uint256).max,
+                    minSwapAmountOut: 1,
+                    swapData: swapData
+                })
+            );
 
-        uint256[2] memory balsAfter =
-            [weth.balanceOf(address(this)), dai.balanceOf(address(this))];
+        uint256[2] memory balsAfter = [
+            weth.balanceOf(address(this)),
+            dai.balanceOf(address(this))
+        ];
 
         console.log("Collateral withdrawn: %e", collateralWithdrawn);
-        console.log("Debt repaid from msg.sender : %e", debtRepaidFromMsgSender);
+        console.log(
+            "Debt repaid from msg.sender : %e",
+            debtRepaidFromMsgSender
+        );
         console.log("Borrowed leftover: %e", borrowedLeftover);
 
         // Accounting for Aave rounding down
@@ -119,8 +119,9 @@ contract LongShortTest is Test {
 
         // Test open
         console.log("--- open ---");
-        IVariableDebtToken debtToken =
-            IVariableDebtToken(debtReserve.variableDebtTokenAddress);
+        IVariableDebtToken debtToken = IVariableDebtToken(
+            debtReserve.variableDebtTokenAddress
+        );
         debtToken.approveDelegation(address(target), type(uint256).max);
 
         uint256 collateralAmount = 1000 * 1e18;
@@ -164,30 +165,37 @@ contract LongShortTest is Test {
         uint256 daiBal = dai.balanceOf(address(this));
         dai.approve(address(target), daiBal);
 
-        uint256[2] memory balsBefore =
-            [dai.balanceOf(address(this)), weth.balanceOf(address(this))];
+        uint256[2] memory balsBefore = [
+            dai.balanceOf(address(this)),
+            weth.balanceOf(address(this))
+        ];
 
         (
             uint256 collateralWithdrawn,
             uint256 debtRepaidFromMsgSender,
             uint256 borrowedLeftover
         ) = target.close(
-            LongShort.CloseParams({
-                collateralToken: DAI,
-                collateralAmount: daiBal,
-                maxCollateralToWithdraw: type(uint256).max,
-                borrowToken: WETH,
-                maxDebtToRepay: type(uint256).max,
-                minSwapAmountOut: 1,
-                swapData: swapData
-            })
-        );
+                LongShort.CloseParams({
+                    collateralToken: DAI,
+                    collateralAmount: daiBal,
+                    maxCollateralToWithdraw: type(uint256).max,
+                    borrowToken: WETH,
+                    maxDebtToRepay: type(uint256).max,
+                    minSwapAmountOut: 1,
+                    swapData: swapData
+                })
+            );
 
-        uint256[2] memory balsAfter =
-            [dai.balanceOf(address(this)), weth.balanceOf(address(this))];
+        uint256[2] memory balsAfter = [
+            dai.balanceOf(address(this)),
+            weth.balanceOf(address(this))
+        ];
 
         console.log("Collateral withdrawn: %e", collateralWithdrawn);
-        console.log("Debt repaid from msg.sender : %e", debtRepaidFromMsgSender);
+        console.log(
+            "Debt repaid from msg.sender : %e",
+            debtRepaidFromMsgSender
+        );
         console.log("Borrowed leftover: %e", borrowedLeftover);
 
         // Accounting for Aave rounding down

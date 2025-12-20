@@ -2,7 +2,7 @@
 
 In this exercise, you'll learn how to create a long and short position with Aave V3.
 
-The starter code for this exercise is provided in `foundry/src/exercises/LongShort.sol`
+The starter code for this exercise is provided in `foundry/src/exercises/LongShort.sol` 
 
 Solution is provided in `foundry/src/solutions/LongShort.sol`
 
