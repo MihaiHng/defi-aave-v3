@@ -4,7 +4,7 @@ In this exercise, you'll learn how to liquidate an under-collateralized debt fro
 
 The starter code for this exercise is provided in `foundry/src/exercises/Flash.sol`
 
-Solution is provided in `foundry/src/solutions/Flash.sol`
+Solution is provided in `foundry/src/solutions/Flash.sol` 
 
 ## Task 1 - Initiate flash loan
 
