@@ -9,9 +9,11 @@ import {POOL} from "../Constants.sol";
 contract Liquidate {
     IPool public constant pool = IPool(POOL);
 
-    function liquidate(address collateral, address borrowedToken, address user)
-        public
-    {
+    function liquidate(
+        address collateral,
+        address borrowedToken,
+        address user
+    ) public {
         IPool.ReserveData memory reserve = pool.getReserveData(borrowedToken);
         uint256 debt = IERC20(reserve.variableDebtTokenAddress).balanceOf(user);
 

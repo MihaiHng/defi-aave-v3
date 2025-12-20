@@ -2,7 +2,7 @@
 
 In this exercise, you'll learn how to liquidate an under-collateralized debt from Aave V3.
 
-The starter code for this exercise is provided in `foundry/src/exercises/Liquidate.sol`
+The starter code for this exercise is provided in `foundry/src/exercises/Liquidate.sol` 
 
 Solution is provided in `foundry/src/solutions/Liquidate.sol`
 

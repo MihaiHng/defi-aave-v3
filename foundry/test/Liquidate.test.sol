@@ -56,13 +56,13 @@ contract LiquidateTest is Test {
     }
 
     function test_liquidate() public {
-        (uint256 colUsdBefore, uint256 debtUsdBefore,,,,) =
-            pool.getUserAccountData(address(this));
+        (uint256 colUsdBefore, uint256 debtUsdBefore, , , , ) = pool
+            .getUserAccountData(address(this));
 
         target.liquidate(WETH, DAI, address(this));
 
-        (uint256 colUsdAfter, uint256 debtUsdAfter,,,,) =
-            pool.getUserAccountData(address(this));
+        (uint256 colUsdAfter, uint256 debtUsdAfter, , , , ) = pool
+            .getUserAccountData(address(this));
 
         assertLt(colUsdAfter, colUsdBefore, "USD collateral after");
         assertLt(debtUsdAfter, debtUsdBefore, "USD debt after");
